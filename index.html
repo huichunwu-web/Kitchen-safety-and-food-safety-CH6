@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食安講堂：細菌與防腐劑的科學真相</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        emerald: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .tab-btn.active {
+            border-bottom-color: #0284c7;
+            color: #0284c7;
+            font-weight: 700;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Navigation Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-teal-500 flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-shield-virus text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-slate-900 leading-tight">食安講堂</h1>
+                        <p class="text-xs text-slate-500">Ch.6 細菌與防腐劑的科學真相</p>
+                    </div>
+                </div>
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex space-x-8 h-full" id="desktop-nav">
+                    <button onclick="switchTab('overview')" class="tab-btn active inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" data-tab="overview">
+                        <i class="fa-solid fa-book-open mr-2"></i>核心總覽
+                    </button>
+                    <button onclick="switchTab('flashcards')" class="tab-btn inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" data-tab="flashcards">
+                        <i class="fa-solid fa-layer-group mr-2"></i>卡片快刷
+                    </button>
+                    <button onclick="switchTab('quiz')" class="tab-btn inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" data-tab="quiz">
+                        <i class="fa-solid fa-list-check mr-2"></i>模擬測驗 (10題)
+                    </button>
+                    <button onclick="switchTab('inspector')" class="tab-btn inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" data-tab="inspector">
+                        <i class="fa-solid fa-magnifying-glass text-sky-600 mr-2"></i>標籤健檢工具
+                    </button>
+                </nav>
+            </div>
+        </div>
+        <!-- Mobile Bottom Nav -->
+        <div class="md:hidden flex justify-around border-t border-slate-200 bg-white py-2">
+            <button onclick="switchTab('overview')" class="flex flex-col items-center text-xs text-slate-600 focus:outline-none" id="m-nav-overview">
+                <i class="fa-solid fa-book-open text-base mb-1"></i>總覽
+            </button>
+            <button onclick="switchTab('flashcards')" class="flex flex-col items-center text-xs text-slate-600 focus:outline-none" id="m-nav-flashcards">
+                <i class="fa-solid fa-layer-group text-base mb-1"></i>快刷
+            </button>
+            <button onclick="switchTab('quiz')" class="flex flex-col items-center text-xs text-slate-600 focus:outline-none" id="m-nav-quiz">
+                <i class="fa-solid fa-list-check text-base mb-1"></i>測驗
+            </button>
+            <button onclick="switchTab('inspector')" class="flex flex-col items-center text-xs text-slate-600 focus:outline-none" id="m-nav-inspector">
+                <i class="fa-solid fa-magnifying-glass text-base mb-1"></i>健檢
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: CORE OVERVIEW -->
+        <section id="tab-overview" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-400/30 text-sky-200 text-xs font-semibold rounded-full mb-3">食品衛生安全與品質管理考題指南</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">破解細菌與防腐劑的迷思</h2>
+                    <p class="text-sky-100 text-sm sm:text-base leading-relaxed mb-6">掌握生物性危害與防腐劑作用機制、指標菌演變規範（腸桿菌科新制）、HACCP 與 4 大品質驗證標章的全方位知識體系。</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="switchTab('quiz')" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-white text-sm font-semibold rounded-xl shadow-md transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> 開始 10 題模擬測驗
+                        </button>
+                        <button onclick="switchTab('inspector')" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-sm font-semibold rounded-xl transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-vial"></i> 體驗標籤健檢器
+                        </button>
+                    </div>
+                </div>
+                <i class="fa-solid fa-flask-vial absolute -right-6 -bottom-8 text-white/10 text-9xl pointer-events-none hidden sm:block"></i>
+            </div>
+
+            <!-- Concept Grid Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1: 抑菌與消毒機制 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-dna"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">抑菌與殺菌機制差異</h3>
+                    <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside leading-relaxed">
+                        <li><strong class="text-slate-800">強氧化劑 (如 ClO₂)：</strong>從<span class="text-amber-600 font-medium">細菌外部</span>破壞細胞壁與蛋白質 structure。主要作為環境消毒或洗潔劑，<em class="text-red-600 font-semibold">不可作為食品添加物</em>。</li>
+                        <li><strong class="text-slate-800">pH 調整劑 (有機酸)：</strong>以未解離型態滲入<span class="text-sky-600 font-medium">細菌內部</span>，降低胞內 pH 值抑制代謝。</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: 衛生指標菌演進 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-microscope"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">衛生指標菌與標準</h3>
+                    <ul class="text-slate-600 text-sm space-y-2 leading-relaxed">
+                        <li>• <strong>生菌數：</strong>反映生產與儲存環境衛生，但不等同於必然有致病菌。</li>
+                        <li>• <strong>大腸桿菌 (E. coli)：</strong>腸道棲息菌，標準通常要求<span class="text-emerald-700 font-bold bg-emerald-50 px-1 rounded">陰性（不得檢出）</span>，代表糞便污染風險。</li>
+                        <li>• <strong>腸桿菌科 (Enterobacteriaceae)：</strong>包含大腸桿菌群、沙門氏菌等，國際與臺灣新標準已逐漸取代傳統大腸桿菌群指標。</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: 毒性階層排行 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-skull-crossbones"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">醇類與有機酸毒性排行榜</h3>
+                    <div class="text-xs space-y-2 text-slate-600">
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                            <span class="font-bold text-purple-700">醇類毒性：</span>
+                            <span class="font-mono">甲醇 (Methanol) > 乙醇 (Ethanol) > 甘油 (Glycerol)</span>
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                            <span class="font-bold text-purple-700">有機酸毒性：</span>
+                            <span class="font-mono">甲酸 (蟻酸) > 乙酸 (醋酸) > 丙酸</span>
+                        </div>
+                        <p class="text-slate-500 italic">鏈長越短、毒性越強；甲醇在人體代謝為甲酸會引發失明與酸中毒。</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: HACCP 管理體系 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">HACCP 兩大核心概念</h3>
+                    <p class="text-slate-600 text-sm mb-3">衛生安全預防管理系統，包含兩大精神：</p>
+                    <div class="grid grid-cols-2 gap-2 text-center text-xs">
+                        <div class="p-2 bg-amber-50 rounded-lg border border-amber-200">
+                            <strong class="block text-amber-900 font-bold">HA</strong>
+                            <span class="text-amber-700">危害分析</span>
+                        </div>
+                        <div class="p-2 bg-amber-50 rounded-lg border border-amber-200">
+                            <strong class="block text-amber-900 font-bold">CCP</strong>
+                            <span class="text-amber-700">重要管制點</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: 驗證標章分類 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">品質驗證標章剖析</h3>
+                    <ul class="text-slate-600 text-sm space-y-1.5">
+                        <li><span class="font-bold text-slate-800">CAS：</span>優良農產品標章 (優質國產農產品)。</li>
+                        <li><span class="font-bold text-slate-800">TQF：</span>臺灣優良食品驗證 (自願性第三方)。</li>
+                        <li><span class="font-bold text-slate-800">有機農產品：</span>嚴禁使用化學合成防腐劑與農藥。</li>
+                        <li><span class="font-bold text-slate-800">ISO 22000：</span>國際食品安全管理系統標準。</li>
+                    </ul>
+                </div>
+
+                <!-- Card 6: GHP優良評核 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">GHP 優良分級評核</h3>
+                    <p class="text-slate-600 text-sm mb-3">衛生機關對餐飲與食品業者執行 GHP 評核，頒發優良分級標章：</p>
+                    <div class="flex items-center justify-around bg-emerald-50 py-3 rounded-xl border border-emerald-200">
+                        <span class="px-3 py-1 bg-emerald-600 text-white font-bold text-xs rounded-full">「優」級</span>
+                        <span class="text-emerald-400 font-bold">&</span>
+                        <span class="px-3 py-1 bg-teal-600 text-white font-bold text-xs rounded-full">「良」級</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: FLASHCARDS -->
+        <section id="tab-flashcards" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">核心知識卡片快刷</h2>
+                    <p class="text-xs text-slate-500 mt-1">點擊卡片即可翻面查看詳細解析。掌握後可標記為「已熟記」。</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-500">進度：<strong id="card-progress-text" class="text-sky-600 font-bold">0/15</strong></span>
+                    <button onclick="resetFlashcards()" class="px-3 py-1.5 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i>重置
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card Container -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="flashcards-grid">
+                <!-- Dynamic cards populated by JS -->
+            </div>
+        </section>
+
+        <!-- TAB 3: MOCK QUIZ -->
+        <section id="tab-quiz" class="hidden space-y-6">
+            <!-- Quiz Header Banner -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="px-2.5 py-0.5 bg-sky-100 text-sky-800 text-xs font-semibold rounded-full mb-2 inline-block">完整題庫測試</span>
+                    <h2 class="text-xl font-bold text-slate-900">Ch.6 模擬檢定測驗（共 10 題）</h2>
+                    <p class="text-xs text-slate-500 mt-1">選取答案後點擊確認，考題即時顯示詳細答案解析。</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <div class="text-xs text-slate-400">目前得分</div>
+                        <div class="text-2xl font-black text-sky-600" id="quiz-score-display">0 / 10</div>
+                    </div>
+                    <button onclick="resetQuiz()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                        <i class="fa-solid fa-arrow-rotate-right mr-1"></i>重新測驗
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Items Container -->
+            <div class="space-y-6" id="quiz-container">
+                <!-- Generated by JS -->
+            </div>
+        </section>
+
+        <!-- TAB 4: LABEL INSPECTOR -->
+        <section id="tab-inspector" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="max-w-2xl mb-6">
+                    <h2 class="text-xl font-bold text-slate-900">食品成分標籤 AI 健檢器</h2>
+                    <p class="text-xs text-slate-500 mt-1">複製貼上您購入食品包裝上的「原料與添加物列表」，系統將自動掃描防腐劑、pH 調整劑與有機酸成分。</p>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-6">
+                    <!-- Input Section -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <label class="block text-sm font-semibold text-slate-700">輸入成分或成分標籤文字：</label>
+                        <textarea id="label-input" rows="7" class="w-full p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm font-sans" placeholder="範例：水、高粱、大豆有機酸、己二酸、檸檬酸鈉、苯甲酸鈉、二氧化碳、醋酸、磷酸鹽..."></textarea>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="analyzeLabel()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-xl shadow transition flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> 開始健檢分析
+                            </button>
+                            <button onclick="loadSampleLabel(1)" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs rounded-xl">
+                                帶入範例 1 (醬油)
+                            </button>
+                            <button onclick="loadSampleLabel(2)" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs rounded-xl">
+                                帶入範例 2 (加工肉品)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Result Section -->
+                    <div class="lg:col-span-6 border border-slate-200 bg-slate-50 p-5 rounded-xl space-y-4">
+                        <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2 border-b border-slate-200 pb-2">
+                            <i class="fa-solid fa-chart-pie text-sky-600"></i> 分析報告結果
+                        </h3>
+                        <div id="inspector-result-content" class="text-xs text-slate-500 space-y-3">
+                            <p class="italic text-center py-8">請在左側輸入文字並點擊「開始健檢分析」</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 食安講堂：細菌與防腐劑的科學真相 Interactive Guide. All rights reserved.</p>
+            <p class="mt-1">本教學應用程式專為食品衛生安全與品質管理考題複習與觀念建立設計。</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA STRUCTURES ---
+        const quizData = [
+            {
+                tag: '抑菌機制',
+                question: '關於二氧化氯 (ClO2) 與 pH 值調整劑（如有機酸）的殺菌與抑菌機制，下列敘述何者正確？',
+                options: [
+                    '二氧化氯與有機酸皆是由細菌內部破壞 DNA',
+                    '二氧化氯從細菌外部破壞結構；pH調整劑主要是未解離酸滲入細菌內部達到抑菌效果',
+                    'pH調整劑是在細菌外部破壞細胞膜；二氧化氯滲入內部',
+                    '兩者皆是透過改變人體細胞 pH 值達到抑菌效果'
+                ],
+                correct: 1,
+                explanation: '二氧化氯為強氧化劑，主要從外部氧化破壞細菌細胞壁與細胞膜；pH調整劑（如未解離有機酸）則可穿透細胞膜進入細菌內部，解離出氫離子降低胞內 pH 值，抑制細菌代謝。'
+            },
+            {
+                tag: '衛生指標菌演變',
+                question: '在最新食品衛生標準修訂趨勢中，關於「腸桿菌科 (Enterobacteriaceae)」取代傳統指標菌的敘述，何者正確？',
+                options: [
+                    '腸桿菌科涵蓋範圍比傳統大腸桿菌群更廣，能更精準評估衛生管理狀況',
+                    '腸桿菌科僅包含大腸桿菌，不包含其他致病菌',
+                    '腸桿菌科測試方法複雜且無法作為法規衛生指標菌',
+                    '傳統大腸桿菌群能完全涵蓋所有耐熱性腸道致病菌'
+                ],
+                correct: 0,
+                explanation: '腸桿菌科 (Enterobacteriaceae) 包含大腸桿菌群、沙門氏菌、克雷伯氏菌等，比傳統 Coliforms 能更全面且精準地反映食品生產過程的衛生狀況與製程防護效能。'
+            },
+            {
+                tag: '硝酸鹽與肉毒桿菌',
+                question: '肉品加工中常添加亞硝酸鹽，其在食品安全上的主要關鍵作用為何？',
+                options: [
+                    '僅為了讓肉品呈現鮮紅色澤，無防腐功能',
+                    '抑制肉毒桿菌 (Clostridium botulinum)生長',
+                    '增加肉品的蛋白質含量',
+                    '降低肉品的重量損失'
+                ],
+                correct: 1,
+                explanation: '亞硝酸鹽除了維持肉品色澤外，最核心的食安功能是有效抑制肉毒桿菌孢子發芽與產生致命的肉毒桿菌素。'
+            },
+            {
+                tag: '防腐劑規範',
+                question: '關於臺灣食品添加物防腐劑之法定使用規範，下列何者正確？',
+                options: [
+                    '防腐劑可以隨意添加於所有生鮮農鮮食材中',
+                    '防腐劑的使用有嚴格的正面表列種類、適用食品範圍及限量標準',
+                    '苯甲酸與己二酸可以無限制添加於任何飲料中',
+                    '只要添加防腐劑即可替代所有的衛生清潔與高溫滅菌程序'
+                ],
+                correct: 1,
+                explanation: '食品添加物採用「正面表列」管理，防腐劑必須在法定的品項、指定食品範圍及限量濃度內使用，且絕不能替代良好的衛生操作。'
+            },
+            {
+                tag: 'HACCP精神',
+                question: 'HACCP (危害分析重要管制點) 系統的兩大核心精神與英文縮寫分別為何？',
+                options: [
+                    'HA 代表危害分析，CCP 代表重要管制點',
+                    'HA 代表衛生評核，CCP 代表品質控制點',
+                    'HA 代表危害預防，CCP 代表化學管制點',
+                    'HA 代表健康檢查，CCP 代表關鍵衛生點'
+                ],
+                correct: 0,
+                explanation: 'HACCP 即為 Hazard Analysis (HA，危害分析) 與 Critical Control Point (CCP，重要管制點) 的縮寫組合。'
+            },
+            {
+                tag: '抑菌 vs 殺菌',
+                question: '食品防腐劑的主要作用機制為「靜菌 (Bacteriostatic)」而非「殺菌 (Bactericidal)」，這代表什麼意義？',
+                options: [
+                    '防腐劑能瞬間將食品中所有的細菌全部殺光死絕',
+                    '防腐劑主要是抑制細菌的生長與繁殖，降低腐敗速度，而非徹底滅菌',
+                    '防腐劑能破壞食品中所有細菌的孢子',
+                    '防腐劑會將細菌轉化為益生菌'
+                ],
+                correct: 1,
+                explanation: '合法劑量下的防腐劑主要是「靜菌作用」（抑菌），抑制細菌代謝與分裂繁殖，延長保存期，並非將細菌全數殺滅的強效殺菌劑。'
+            },
+            {
+                tag: '衛生指標菌與標準',
+                question: '關於「生菌數」、「大腸桿菌群」與「大腸桿菌」在食品衛生標準上的規範與指標意義，下列何者正確？',
+                options: [
+                    '生菌數超標代表食品必然含有高致病性病原菌',
+                    '大腸桿菌 (E. coli) 衛生標準通常要求為陰性（不得檢出），指示糞便污染風險',
+                    '大腸桿菌群與大腸桿菌在所有食品衛生標準中均要求絕對不得檢出任何菌株',
+                    '生菌數高低僅代表營養價值高低，與食品衛生狀況無關'
+                ],
+                correct: 1,
+                explanation: '大腸桿菌 (E. coli) 棲息於人畜腸道，為糞便污染與食安指標，衛生標準通常要求為陰性（不得檢出）；生菌數高代表衛生條件與儲存狀況不佳，但不等同於一定含有致病菌。'
+            },
+            {
+                tag: '驗證標章類型',
+                question: '關於食品安全與品質驗證標章的類型與定義，下列敘述何者正確？',
+                options: [
+                    'TQF 臺灣優良食品驗證為政府強制所有食品業者必須取得的法定標章',
+                    'CAS 臺灣優良農產品標章主要針對在地優質農產品及其加工品進行驗證',
+                    '取得有機農產品驗證標章之食品，允許添加適量化學合成防腐劑',
+                    'ISO 22000 是僅限臺灣國內使用的農業品質衛生標準'
+                ],
+                correct: 1,
+                explanation: 'CAS 為臺灣優良農產品標章，專針對優質國產農產品及加工品；TQF 為自願性第三方驗證；有機農產品嚴禁使用化學合成防腐劑；ISO 22000 為國際食品安全管理系統標準。'
+            },
+            {
+                tag: 'GHP 優良分級',
+                question: '食品良好衛生規範準則 (GHP) 的優良評核分級標章，主要分為哪兩個等級？',
+                options: [
+                    '特優與合格',
+                    '優級與良級',
+                    'A級與B級',
+                    '金牌與銀牌'
+                ],
+                correct: 1,
+                explanation: '衛生機關針對餐飲與食品業者實施 GHP 評核，通過者頒發「優」級或「良」級優良標章。'
+            },
+            {
+                tag: 'HACCP 法定強制',
+                question: '關於 HACCP (危害分析重要管制點) 在臺灣食安法規中的強制實施對象，下列敘述何者正確？',
+                options: [
+                    '所有水產品加工廠、肉類加工廠及餐盒食品工廠等依法應實施 HACCP',
+                    '僅有路邊攤販需要實施 HACCP',
+                    'HACCP 為全自願參與，政府從未依法強制任何產業實施',
+                    '僅有進口食品貿易商需要實施 HACCP'
+                ],
+                correct: 0,
+                explanation: '衛生福利部已依法分階段公告指定水產品加工業、肉類加工業、餐盒食品工廠及乳品加工業等必須強制實施 HACCP 管理系統。'
+            }
+        ];
+
+        const flashcardData = [
+            { title: '二氧化氯 (ClO2)', tag: '抑菌機制', front: '二氧化氯的作用機制為何？是否可添加於食品中？', back: '強氧化劑！從細菌外部氧化細胞壁與蛋白質。在臺灣主要用於環境消毒或洗潔劑，【不可】作為食品添加物直接添加於食品中。' },
+            { title: 'pH 調整劑', tag: '抑菌機制', front: 'pH 調整劑（有機酸）如何達到抑菌效果？', back: '以【未解離型態】滲入細菌細胞內部，解離出 H+ 降低胞內 pH 值，破壞細菌正常酵素代謝。' },
+            { title: '醇類毒性排行', tag: '毒性階層', front: '甲醇、乙醇、甘油的毒性與代謝差異？', back: '毒性排行：甲醇 > 乙醇 > 甘油。甲醇在人體代謝為【甲酸】，會造成嚴重酸中毒與視神經受損（失明）。' },
+            { title: '有機酸毒性排行', tag: '毒性階層', front: '有機酸碳鏈長度與毒性的關係？', back: '碳鏈越短，毒性與刺激性通常相對越高。甲酸（蟻酸） > 乙酸（醋酸） > 丙酸。' },
+            { title: '大腸桿菌 (E. coli)', tag: '指標菌', front: '大腸桿菌在食品衛生標準中的指標意義？', back: '棲息於人畜腸道，為【糞便污染】的直接指標。衛生標準中通常要求為【陰性（不得檢出）】。' },
+            { title: '腸桿菌科', tag: '指標菌', front: '為什麼新標準偏向使用「腸桿菌科」？', back: '腸桿菌科 (Enterobacteriaceae) 包含大腸桿菌群、沙門氏菌等，比傳統大腸桿菌群範圍更廣、檢測更精準。' },
+            { title: '肉毒桿菌', tag: '致病菌', front: '肉毒桿菌的生長特性與防範？', back: '為【厭氧產芽孢菌】，在無氧環境產生強烈神經毒素。肉品中添加【亞硝酸鹽】可有效抑制其芽孢發芽。' },
+            { title: 'HACCP 定義', tag: '品質管理', front: 'HACCP 的兩大核心關鍵名詞？', back: 'HA = Hazard Analysis (危害分析)；CCP = Critical Control Point (重要管制點)。' },
+            { title: '水活性 (aw)', tag: '食品物理', front: '致病菌生長的關鍵水活性界線？', back: '大多數致病菌需要 aw > 0.91 才能快速生長。降至 0.85 以下可大幅抑制多數細菌繁殖。' },
+            { title: '靜菌 vs 殺菌', tag: '防腐劑觀念', front: '食品防腐劑的作用是靜菌還是殺菌？', back: '主要為【靜菌作用 (Bacteriostatic)】，即抑制細菌生長與繁殖速度，延長保存期，非徹底滅菌。' },
+            { title: 'CAS 標章', tag: '品質驗證', front: 'CAS 標章的驗證範疇與特色？', back: '臺灣優良農產品標章，強調【優質國產農產品】及其加工品。' },
+            { title: 'TQF 標章', tag: '品質驗證', front: 'TQF 標章的性質？', back: '臺灣優良食品驗證，為自願性第三方驗證體系，承接原 GMA/GMP 體系。' },
+            { title: 'GHP 優良標章', tag: '衛生評核', front: 'GHP 分級評核標章分為哪兩級？', back: '分為【「優」級】與【「良」級】兩大優良等級。' },
+            { title: '有機農產品標章', tag: '防腐劑規範', front: '有機驗證食品可否使用化學防腐劑？', back: '【絕對禁止】使用化學合成防腐劑與合成農藥。' },
+            { title: '志賀毒素', tag: '致病菌危害', front: '腸道出血性大腸桿菌 O157:H7 的主致病因子？', back: '分泌【志賀毒素 (Shiga toxin)】，可能引發出血性大腸炎與溶血性尿毒綜合症 (HUS)。' }
+        ];
+
+        let masteredCards = new Set();
+        let userQuizAnswers = {};
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            renderFlashcards();
+            renderQuiz();
+        };
+
+        // --- TAB SWITCHING LOGIC ---
+        function switchTab(tabId) {
+            ['overview', 'flashcards', 'quiz', 'inspector'].forEach(id => {
+                const el = document.getElementById(`tab-${id}`);
+                const btn = document.querySelector(`[data-tab="${id}"]`);
+                const mBtn = document.getElementById(`m-nav-${id}`);
+                
+                if (id === tabId) {
+                    el.classList.remove('hidden');
+                    if (btn) btn.classList.add('active');
+                    if (mBtn) mBtn.classList.add('text-sky-600', 'font-bold');
+                } else {
+                    el.classList.add('hidden');
+                    if (btn) btn.classList.remove('active');
+                    if (mBtn) mBtn.classList.remove('text-sky-600', 'font-bold');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- FLASHCARDS LOGIC ---
+        function renderFlashcards() {
+            const container = document.getElementById('flashcards-grid');
+            container.innerHTML = '';
+
+            flashcardData.forEach((card, idx) => {
+                const isMastered = masteredCards.has(idx);
+                const cardEl = document.createElement('div');
+                cardEl.className = 'perspective-1000 h-64 cursor-pointer group';
+                cardEl.innerHTML = `
+                    <div id="card-inner-${idx}" class="relative w-full h-full transform-style-3d transition-transform duration-500 rounded-2xl border ${isMastered ? 'border-emerald-300 bg-emerald-50/30' : 'border-slate-200 bg-white'} shadow-sm group-hover:shadow-md">
+                        <!-- Front Face -->
+                        <div onclick="flipCard(${idx})" class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between rounded-2xl bg-white">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="px-2.5 py-0.5 bg-sky-100 text-sky-700 text-xs font-semibold rounded-full">${card.tag}</span>
+                                    <span class="text-xs text-slate-400"># ${idx+1}</span>
+                                </div>
+                                <h3 class="font-bold text-slate-800 text-base mb-2">${card.title}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">${card.front}</p>
+                            </div>
+                            <div class="flex justify-between items-center text-xs text-slate-400 border-t border-slate-100 pt-3">
+                                <span><i class="fa-solid fa-rotate mr-1"></i>點擊翻面解析</span>
+                                <button onclick="event.stopPropagation(); toggleMastered(${idx})" class="${isMastered ? 'text-emerald-600 font-bold' : 'text-slate-400 hover:text-emerald-600'} flex items-center gap-1">
+                                    <i class="fa-${isMastered ? 'solid' : 'regular'} fa-circle-check text-base"></i> ${isMastered ? '已熟記' : '標記熟記'}
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Back Face -->
+                        <div onclick="flipCard(${idx})" class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-between rounded-2xl bg-slate-900 text-white">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="px-2.5 py-0.5 bg-sky-500/30 text-sky-200 text-xs font-semibold rounded-full">答案解析</span>
+                                    <span class="text-xs text-slate-400"># ${idx+1}</span>
+                                </div>
+                                <h3 class="font-bold text-sky-300 text-base mb-2">${card.title}</h3>
+                                <p class="text-slate-200 text-sm leading-relaxed">${card.back}</p>
+                            </div>
+                            <div class="text-right text-xs text-slate-400 border-t border-slate-800 pt-3">
+                                <span><i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(cardEl);
+            });
+            updateCardProgress();
+        }
+
+        function flipCard(idx) {
+            const inner = document.getElementById(`card-inner-${idx}`);
+            inner.classList.toggle('rotate-y-180');
+        }
+
+        function toggleMastered(idx) {
+            if (masteredCards.has(idx)) {
+                masteredCards.delete(idx);
+            } else {
+                masteredCards.add(idx);
+            }
+            renderFlashcards();
+        }
+
+        function resetFlashcards() {
+            masteredCards.clear();
+            renderFlashcards();
+        }
+
+        function updateCardProgress() {
+            document.getElementById('card-progress-text').innerText = `${masteredCards.size}/${flashcardData.length}`;
+        }
+
+        // --- QUIZ LOGIC ---
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            quizData.forEach((q, qIdx) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4';
+                card.id = `quiz-card-${qIdx}`;
+
+                const optionsHTML = q.options.map((opt, oIdx) => `
+                    <label onclick="selectOption(${qIdx}, ${oIdx})" class="quiz-option-${qIdx} flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition text-sm text-slate-700">
+                        <input type="radio" name="q-${qIdx}" value="${oIdx}" class="mt-0.5 text-sky-600 focus:ring-sky-500">
+                        <span class="leading-relaxed"><strong>${String.fromCharCode(65 + oIdx)}.</strong> ${opt}</span>
+                    </label>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">第 ${qIdx + 1} 題</span>
+                            <span class="px-2.5 py-0.5 bg-sky-50 text-sky-700 text-xs font-semibold rounded-full">${q.tag}</span>
+                        </div>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 leading-snug">${q.question}</h3>
+                    <div class="space-y-2.5 pt-1">
+                        ${optionsHTML}
+                    </div>
+                    <div id="explanation-${qIdx}" class="hidden mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs leading-relaxed space-y-1">
+                        <div class="font-bold flex items-center gap-1.5 text-slate-800" id="exp-title-${qIdx}">
+                            <!-- Inserted by JS -->
+                        </div>
+                        <p class="text-slate-600" id="exp-text-${qIdx}">${q.explanation}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(qIdx, oIdx) {
+            userQuizAnswers[qIdx] = oIdx;
+            
+            // Highlight selected option visually
+            const options = document.querySelectorAll(`.quiz-option-${qIdx}`);
+            options.forEach((optEl, i) => {
+                if (i === oIdx) {
+                    optEl.classList.add('border-sky-500', 'bg-sky-50/50');
+                } else {
+                    optEl.classList.remove('border-sky-500', 'bg-sky-50/50');
+                }
+            });
+
+            // Reveal explanation immediately
+            const expDiv = document.getElementById(`explanation-${qIdx}`);
+            const expTitle = document.getElementById(`exp-title-${qIdx}`);
+            expDiv.classList.remove('hidden');
+
+            const isCorrect = oIdx === quizData[qIdx].correct;
+            if (isCorrect) {
+                expDiv.className = 'mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs leading-relaxed space-y-1';
+                expTitle.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> <span class="text-emerald-800">回答正確！</span>`;
+            } else {
+                expDiv.className = 'mt-4 p-4 rounded-xl bg-red-50 border border-red-200 text-xs leading-relaxed space-y-1';
+                expTitle.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-600"></i> <span class="text-red-800">回答錯誤（正確答案為：${String.fromCharCode(65 + quizData[qIdx].correct)}）</span>`;
+            }
+
+            calculateScore();
+        }
+
+        function calculateScore() {
+            let score = 0;
+            Object.keys(userQuizAnswers).forEach(qIdx => {
+                if (userQuizAnswers[qIdx] === quizData[qIdx].correct) {
+                    score++;
+                }
+            });
+            document.getElementById('quiz-score-display').innerText = `${score} / ${quizData.length}`;
+        }
+
+        function resetQuiz() {
+            userQuizAnswers = {};
+            document.getElementById('quiz-score-display').innerText = `0 / ${quizData.length}`;
+            renderQuiz();
+        }
+
+        // --- LABEL INSPECTOR LOGIC ---
+        const sampleLabels = {
+            1: "水、脫脂大豆、小麥、食鹽、乙醇、有機酸、己二酸、檸檬酸鈉、苯甲酸鈉 (防腐劑)",
+            2: "豬肉、豬脂、水、糖、食鹽、亞硝酸鈉、磷酸鹽、醋酸、丙酸鈉、味精"
+        };
+
+        function loadSampleLabel(type) {
+            document.getElementById('label-input').value = sampleLabels[type];
+            analyzeLabel();
+        }
+
+        function analyzeLabel() {
+            const text = document.getElementById('label-input').value.trim();
+            const resultDiv = document.getElementById('inspector-result-content');
+
+            if (!text) {
+                resultDiv.innerHTML = `<p class="text-red-500 italic text-center py-4">請輸入有效成分文字進行掃描！</p>`;
+                return;
+            }
+
+            // Keyword detection
+            const acidMatches = (text.match(/酸/g) || []).length;
+            const preservatives = ['苯甲酸', '己二酸', '丙酸', '去水醋酸', '對羥苯甲酸'];
+            const acids = ['檸檬酸', '蘋果酸', '醋酸', '乳酸', '酒石酸', '有機酸'];
+            const specialObs = ['二氧化氯', '亞硝酸', '硝酸'];
+
+            let foundPreservatives = preservatives.filter(p => text.includes(p));
+            let foundAcids = acids.filter(a => text.includes(a));
+            let foundSpecial = specialObs.filter(s => text.includes(s));
+
+            let html = `
+                <div class="space-y-3 text-slate-700">
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
+                        <span>「酸」字出現頻率：</span>
+                        <strong class="text-sky-600 font-mono text-sm">${acidMatches} 次</strong>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-800">防腐劑檢出 (${foundPreservatives.length})：</div>
+                        ${foundPreservatives.length > 0 
+                            ? `<p class="text-red-600 font-semibold">${foundPreservatives.join('、 ')}</p><p class="text-slate-500 text-[11px]">注意：合法防腐劑需符合正面表列食品範圍與限量。</p>`
+                            : `<p class="text-emerald-600">未偵測到常見法定防腐劑名稱</p>`
+                        }
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                        <div class="font-bold text-slate-800">pH 調整劑/有機酸 (${foundAcids.length})：</div>
+                        ${foundAcids.length > 0 
+                            ? `<p class="text-sky-600 font-medium">${foundAcids.join('、 ')}</p><p class="text-slate-500 text-[11px]">機制：以未解離型態滲入細胞內部降低 pH 值以抑菌。</p>`
+                            : `<p class="text-slate-400">未檢出常見有機酸</p>`
+                        }
+                    </div>
+
+                    ${foundSpecial.length > 0 ? `
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 text-amber-900 space-y-1">
+                            <div class="font-bold"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>特殊化學物關注 (${foundSpecial.join('、 ')})：</div>
+                            <p class="text-[11px] leading-relaxed">二氧化氯不可作為食品添加物；亞硝酸鹽主要用於抑毒肉毒桿菌及發色，需符合法定殘留量。</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            resultDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
